@@ -1,0 +1,52 @@
+
+group = 'name.martingeisse'
+version = '0.1'
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	// JSRs
+	compile 'com.google.code.findbugs:jsr305:3.0.0'
+
+	// web server
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
+	testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+
+	// common helper libraries
+	compile 'org.apache.commons:commons-lang3:3.0'
+	compile 'commons-io:commons-io:2.4'
+	compile 'commons-collections:commons-collections:3.2.1'
+	compile 'org.apache.commons:commons-exec:1.3'
+	compile 'com.google.guava:guava:18.0'
+	compile 'joda-time:joda-time:2.5'
+	compile 'log4j:log4j:1.2.17'
+	compile 'commons-beanutils:commons-beanutils:1.9.2'
+	compile 'commons-codec:commons-codec:1.9'
+
+	// Wicket
+	compile('org.apache.wicket:wicket-core:6.20.0') {
+		exclude group: 'org.apache.wicket', module: 'wicket'
+	}
+	compile('org.apache.wicket:wicket-extensions:6.20.0') {
+		exclude group: 'org.apache.wicket', module: 'wicket'
+	}
+	compile('org.wicketstuff:wicketstuff-stateless:6.20.0') {
+		exclude group: 'org.apache.wicket', module: 'wicket'
+	}
+
+	// JSON
+	compile 'com.google.code.gson:gson:2.3'
+
+}

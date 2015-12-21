@@ -1,0 +1,114 @@
+
+confirmed:
+- simpleform
+
+(context) menu:
+- navigation menus are already handled well by (bootstrap, Smartmenu, etc.) + wicket:message + BookmarkablePageLink,
+	especially because they have a defined position in the page, which is also the best place to define the menu
+	contents. So there isn't a lot to be saved by creating menu items in code.
+- context menus aren't. Differences:
+	- a context menu usually has a target object, which affects the URLs the menu items link to
+	- menu items are often *action* links (Wicket: Link) instead of navigation links (Wicket: BookmarkablePageLink)
+		-> but that's OK, since in either case a link object has to be created in Java code
+		-> but the action link still has to refer to the target object
+-> there's the main point. When talking about how context menus are missing, it's not that *menus* are missing,
+	but that *context* is missing. Specifically, a way to react to right-clicking the target, showing a popup for
+	the menu (while the menu itself is just some raw markup laying around on the page, using Bootstrap-popup or
+	Smartmenus), and have the Link objects inside the menu get access to the target. For repeaters, selecting
+	multiple targets is also useful.
+	-> EventPopupBehaviour (event: usually right-click)
+	-> SelectableElementsBehaviour (for repeaters)
+	-> plus: the popup may contain arbitrary context-specific content (useful for leftclick-details)
+	-> design the behavior in such a way that it can be attached to any number of targets, with only one event
+		handler being registered to jQuery
+	-> TODO: The same markup might be used for multiple targets, but the menu contents will have to change. Same
+		for leftclick-details. In the simplest case, this causes an AJAX-load to the server to update the popup
+		contents. Also allow static menus and scripted pure-JS solutions to avoid these requests (because slower).
+	-> TODO: Also, for repeaters, right-clicking shouldn't just open the context menu. It might first change
+		the selected items, then it should open the context menu *for those items*, and have the context menu
+		contents change based on the selected items.
+
+TODO:
+- codemirror
+- hotkeys
+- helpers
+
+----------------------------------------------------------------------------------------------------------------
+Context Menu
+----------------------------------------------------------------------------------------------------------------
+
+Usage:
+- write arbitrary HTML as the target, style as desired
+- write arbitrary HTML for the popup, style as desired
+	- especially for non-menu popups
+	- main elements *should* have a non-transparent background because it looks nicer, but e.g. multiple
+		boxes with transparent background in between is OK
+	- important: the initial styling *must* make the popup invisible (offscreen or display:none)
+		-> the popup code will change position and visibility of the existing HTML element,
+			hiding it when finished
+	- tab-handling causes the focus to move out of the popup and into other page elements, but this
+		is again orthogonal to the context menu issue -- it's the same for lightboxes and other stuff
+
+TODO
+- it should be possible to put an <a wicket:id="foo"> link into the context menu and inside the link
+	deal with the target.
+	-> how is the target injected? setModel()? That would be rather obvious -- The behavior takes a Wicket
+		model from somewhere (e.g. set in the behavior, or from its component, or (repeater case) from
+		a child component of its component. It sets the model for the links and shows the popup.
+		- problem #1: the server shouldn't generally be involved
+		- problem #2: the target has to be set for many links
+	-> better approach: A special IModel is set for the link that asks the behavior for its current target.
+		- problem: How is the current target sent to the server? On popup there shouldn't be a request
+			unless needed for rendering up-to-date information *to the popup*.
+		- problem: If no request is sent "on popup" and the links are BookmarkablePageLinks, at what
+			time does their href get changed?
+- asynchronous server callback on popup:
+	- this is only useful if there is also a way to hide the previously displayed information synchronously!
+		Otherwise the user will be confused by that previous information that is not relevant.
+	- in v1 this can be sidestepped by not allowing async server callbacks, or even easier, by not allowing
+		server callbacks at all. For normal context menus they're not needed anyway.
+
+DONE:
+- the menuSelected of the context menu JS call can be something generic provided by the system. This method
+	is specific to context *menus* and the logic done there is better applied to the individual links.
+	(closing the menu probably happens by losing focus).
+- the linking to the context menu can be done by some data-contextmenu attribute that is recognized by
+	the behavior. Even better, it might be possible to make this work even without a behavior.
+	(But then, who provides the model for the target? Simple: Without a component, there is no target.
+		This is still useful for a context menu that targets the whole page, or when the links know by
+		other means what to manipulate. In general, it is useful when the context menu only has 1 possible target).
+- the event (e.g. "contextmenu", "click") is best provided by data-contextmenu-event (so it works without
+	a behavior / component)
+- showing dynamic data inside the popup itself:
+	- allow to register server callbacks in the behavior and update and AJAX-rerender components in there
+		- asynchronous callback: does not block the popup from appearing
+			- TODO see above: 
+		- synchronous callback: blocks the popup from appearing
+
+RADICALLY DIFFERENT APPROACH:
+- the context menu is repeated for each potential target.
+	- don't have to transfer the current target for Link objects because each targets has its own Link objects
+	- don't have to change the URL for BookmarkablePageLink objects because each targets has its own with the
+		correct URL already set
+	- popup content doesn't have to be rendered in a server callback, it has already been rendered
+	- slow-loading content can be put into a lazy-loading container as usual (-> async server callback).
+		TODO: This needs an additional feature: Lazy-loading containers that start loading once they
+			become visible.
+- problems:
+	- markup size. This is the same for rendering the menu items "inline", without a popup, and it's the
+		same order of magnitude as the target content. Also, it's mostly repetition and can be easily compressed
+		by GZIP. This problem is thus not specific to context menus, but to repeatet content in general.
+- implementation:
+	- the popup content gets a wicket:id
+		- should a component be added in its place, or is this the markup-locating id of a Fragment?
+			- if it's a fragment, where is the markup finally placed?
+		- sounds like a repeater gets placed exactly where the markup is specified. This repeater can
+			also emit the required display:none.
+		- this repeater component should be named ContextMenu
+		- the target components needs a behavior that refers to the ContextMenu component
+			- for each target (note that the behavior may define multiple targets for a repeater target)
+				the menu repeater generates an instance of the context menu
+		- possibly: the JS-operated context menu is a container into which the actual menus are placed,
+			so formally only one is visible. This might make things easier, save some event handlers,
+			and make it easier to ensure that only one of them is visible at a time.
+

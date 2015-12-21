@@ -1,0 +1,11 @@
+.DS_Store
+/.project
+/.settings
+/.classpath
+/bin/
+/.gradle
+/build/
+/logs
+/*.log
+/test.html
+/resource/compass/.sass-cache

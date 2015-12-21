@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html>
+	<body>
+		<wicket:panel>
+
+			<ul class="nav nav-pills" role="tablist">
+				<wicket:container wicket:id="tabHeaders">
+					<li wicket:id="tabHeader" />
+				</wicket:container>
+			</ul>
+			<div wicket:id="tabBody" />
+			
+			<wicket:fragment wicket:id="simpleTabHeader">
+				<a wicket:id="link" role="tab"><span wicket:id="title" /></a>
+			</wicket:fragment>
+
+			<wicket:fragment wicket:id="dropdownTabHeader">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span wicket:id="title" /> <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li wicket:id="entries">
+						<a wicket:id="link" role="tab"><span wicket:id="title" /></a>
+					</li>
+				</ul>
+			</wicket:fragment>
+			
+		</wicket:panel>
+	</body>
+</html>

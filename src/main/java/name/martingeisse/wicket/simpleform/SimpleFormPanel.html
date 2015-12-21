@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html>
+	<wicket:head>
+		<style type="text/css">
+		
+			.simple-form .help-block {
+				margin: 0px;
+			}
+			
+			.simple-form .submit-button {
+				margin-top: 30px;
+			}
+		
+		</style>
+	</wicket:head>
+	<body>
+		<wicket:panel>
+
+			<!-- this is the actual per-form-block markup -->
+			<form wicket:id="form" class="simple-form">
+				<div class="form-group" wicket:id="formBlocks" />
+			</form>
+			
+			<!-- ---------------------------------------------------------------------------------------------- -->
+			<!-- form block fragments -->
+			<!-- ---------------------------------------------------------------------------------------------- -->
+			
+			<!-- decorator for form components -->
+			<wicket:fragment wicket:id="decoratorFragment">
+				<div>
+					<label wicket:id="label"><span wicket:id="text">Label</span></label>
+					<a wicket:id="toolLinks" class="btn btn-default">TOOL</a>
+				</div>
+				<div class="help-block" wicket:id="helpText">Help text ...</div>
+				<div wicket:id="error">...</div>
+				<div wicket:id="decoratedBody" />
+			</wicket:fragment>
+
+			<!-- raw form block for an info text box -->
+			<wicket:fragment wicket:id="infoFragment">
+				<div class="alert alert-info">
+					<span class="glyphicon glyphicon-info-sign" />
+					<span wicket:id="html">...</span>
+				</div>
+			</wicket:fragment>
+
+			<!-- raw form block for a submit button -->
+			<wicket:fragment wicket:id="submitButtonFragment">
+				<button type="submit" class="btn btn-primary btn-lg btn-block submit-button" wicket:id="button">... submit button text ...</button>
+			</wicket:fragment>
+
+			<!-- ---------------------------------------------------------------------------------------------- -->
+			<!-- fragments for using form components as the decorated body -->
+			<!-- ---------------------------------------------------------------------------------------------- -->
+			
+			<!-- fragment markup for using a simple text field as the decorated body -->
+			<wicket:fragment wicket:id="textFieldFragment">
+				<input type="text" class="form-control" wicket:id="textField" />
+			</wicket:fragment>
+			
+			<!-- fragment markup for using an email text field as the decorated body -->
+			<wicket:fragment wicket:id="emailTextFieldFragment">
+				<div class="input-group">
+					<span class="input-group-addon" style="font-size: larger; font-weight: bold">@</span>
+					<input type="email" class="form-control" placeholder="you@example.com" wicket:id="textField" />
+				</div>
+			</wicket:fragment>
+			
+			<!-- fragment markup for using a password text field as the decorated body -->
+			<wicket:fragment wicket:id="passwordTextFieldFragment">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+					<input type="password" class="form-control" id="password" placeholder="Password" wicket:id="textField" />
+				</div>
+			</wicket:fragment>
+			
+			<!-- fragment markup for using a text area as the decorated body -->
+			<wicket:fragment wicket:id="textAreaFragment">
+				<textarea class="form-control" wicket:id="textArea" />
+			</wicket:fragment>
+
+		</wicket:panel>
+	</body>
+</html>
