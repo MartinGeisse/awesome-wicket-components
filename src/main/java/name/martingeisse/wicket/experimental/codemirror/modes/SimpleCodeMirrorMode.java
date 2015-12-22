@@ -4,13 +4,13 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.wicket.codemirror.modes;
+package name.martingeisse.wicket.experimental.codemirror.modes;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
-import name.martingeisse.wicket.codemirror.CodeMirrorMode;
+import name.martingeisse.wicket.experimental.codemirror.CodeMirrorMode;
 import name.martingeisse.wicket.internal.JsUtil;
 
 /**

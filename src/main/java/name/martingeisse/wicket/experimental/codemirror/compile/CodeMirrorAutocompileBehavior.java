@@ -2,7 +2,7 @@
  * Copyright (c) 2015 Martin Geisse
  */
 
-package name.martingeisse.wicket.codemirror.compile;
+package name.martingeisse.wicket.experimental.codemirror.compile;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
@@ -15,7 +15,7 @@ import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.request.cycle.RequestCycle;
-import name.martingeisse.wicket.codemirror.CodeMirrorBehavior;
+import name.martingeisse.wicket.experimental.codemirror.CodeMirrorBehavior;
 import name.martingeisse.wicket.helpers.IConsumer;
 import name.martingeisse.wicket.internal.JsUtil;
 import name.martingeisse.wicket.internal.ParameterUtil;

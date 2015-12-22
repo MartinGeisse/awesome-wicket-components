@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.wicket.codemirror.compile;
+package name.martingeisse.wicket.experimental.codemirror.compile;
 
 /**
  * Used to indicate the severity of an error.

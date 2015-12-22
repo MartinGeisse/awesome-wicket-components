@@ -4,9 +4,9 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.wicket.codemirror.modes;
+package name.martingeisse.wicket.experimental.codemirror.modes;
 
-import name.martingeisse.wicket.codemirror.CodeMirrorMode;
+import name.martingeisse.wicket.experimental.codemirror.CodeMirrorMode;
 
 /**
  * Standard modes are available as static fields of this class.

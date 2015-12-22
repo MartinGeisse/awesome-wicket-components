@@ -2,7 +2,7 @@
  * Copyright (c) 2015 Martin Geisse
  */
 
-package name.martingeisse.wicket.codemirror.compile;
+package name.martingeisse.wicket.experimental.codemirror.compile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
