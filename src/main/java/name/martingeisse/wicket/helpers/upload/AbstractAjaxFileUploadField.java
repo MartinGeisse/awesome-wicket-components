@@ -7,8 +7,7 @@
 package name.martingeisse.wicket.helpers.upload;
 
 import java.util.List;
-import name.martingeisse.wicket.helpers.ISimpleCallbackListener;
-import name.martingeisse.wicket.internal.WicketHeadUtil;
+import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
 import org.apache.wicket.markup.ComponentTag;
@@ -24,7 +23,8 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.resource.JavaScriptResourceReference;
 import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.util.upload.FileItem;
+import name.martingeisse.wicket.helpers.ISimpleCallbackListener;
+import name.martingeisse.wicket.internal.WicketHeadUtil;
 
 /**
  * Base class for AJAX file upload files based on jQuery File Upload.

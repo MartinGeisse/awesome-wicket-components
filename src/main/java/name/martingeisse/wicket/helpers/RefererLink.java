@@ -35,7 +35,7 @@ public class RefererLink extends AbstractLink {
 	@Override
 	protected void onBeforeRender() {
 		super.onBeforeRender();
-		if (!isLinkEnabled()) {
+		if (!isEnabledInHierarchy()) {
 			url = null;
 			setVisible(true);
 		} else {
