@@ -76,12 +76,16 @@ import name.martingeisse.wicket.helpers.AjaxRequestUtil;
  * <p><b>Statelessness</b></p>
  *
  * <p>
- * The form can be made stateless by calling {@link #setBuildStateless(boolean)} before
- * this panel has been added to its parent and before adding any form blocks (TODO this should be checked, such that setBuildStateless
- * causes an exception when called later). This changes the {@link Form} to a {@link StatelessForm}
- * and causes the {@link DecoratorBuilder} to build all components in a stateless manner.
- * <b>Note:</b> If you intent to build custom components of any kind, then <i>you</i> are
- * responsible for making them respect the {@link #isBuildStateless()} flag of this panel.
+ * The form can be made stateless by calling {@link #setBuildStateless(boolean)}. This
+ * changes the {@link Form} to a {@link StatelessForm} and causes the {@link DecoratorBuilder}
+ * to build all components in a stateless manner. <b>Note:</b> If you intent to build custom
+ * components of any kind, then <i>you</i> are responsible for making them respect the
+ * {@link #isBuildStateless()} flag of this panel.
+ * </p>
+ * 
+ * <p>
+ * Changing statelessness must occur before the form has been created. The form gets created
+ * when this panel is added to its parent, and also when adding any form blocks.
  * </p>
  * 
  * <p>
@@ -219,6 +223,9 @@ public class SimpleFormPanel<F> extends Panel {
 	 * @return this
 	 */
 	public SimpleFormPanel<F> setBuildStateless(final boolean buildStateless) {
+		if (get("form") != null) {
+			throw new IllegalStateException("cannot change statelessness anymore -- form has already been created");
+		}
 		setFlag(FLAG_BUILD_STATELESS, buildStateless);
 		return this;
 	}
