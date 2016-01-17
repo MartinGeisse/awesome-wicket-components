@@ -76,7 +76,7 @@ import name.martingeisse.wicket.helpers.AjaxRequestUtil;
  * <p>
  * The form can be made stateless by calling {@link #setBuildStateless(boolean)}. This
  * changes the {@link Form} to a {@link StatelessForm} and causes the {@link DecoratorBuilder}
- * to build all components in a stateless manner. <b>Note:</b> If you intent to build custom
+ * to build all components in a stateless manner. <b>Note:</b> If you intend to build custom
  * components of any kind, then <i>you</i> are responsible for making them respect the
  * {@link #isBuildStateless()} flag of this panel.
  * </p>
