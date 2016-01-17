@@ -19,8 +19,6 @@ import org.apache.wicket.model.PropertyModel;
 import name.martingeisse.wicket.helpers.AjaxRequestUtil;
 
 /**
- * TODO: honor FLAG_BUILD_STATELESS
- *
  * <p>
  * This panel implements a "simple form", using a very regular layout.
  * It is intended to quickly build forms, usually to edit data records,
