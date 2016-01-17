@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import name.martingeisse.wicket.helpers.AjaxRequestUtil;
 
 /**
@@ -41,15 +42,36 @@ import name.martingeisse.wicket.helpers.AjaxRequestUtil;
  *
  * <p><b>Usage</b></p>
  *
- * TODO
- * simple use case, including submit button
+ * <p>
+ * Here is a simple example for a registration form:
+ * </p>
+ * 
+ * <pre>
+ * SimpleFormPanel<BasicUsageData> formPanel = new SimpleFormPanel<>("basicUsageForm");
+ * formPanel.prepareDecorator().withLabel("Choose a username").withModel("username").withRequiredness(true).addTextField();
+ * formPanel.prepareDecorator().withLabel("Choose a password").withModel("password").withRequiredness(true).addPasswordTextField();
+ * formPanel.prepareDecorator().withLabel("Please type in your password again").withModel("passwordAgain").withRequiredness(true).addPasswordTextField();
+ * formPanel.prepareSpecialFormBlock().withText("Register").addSubmitButton();
+ * page.add(formPanel);
+ * </pre>
  *
  * <p><b>Built-in features</b></p>
  *
- * TODO
- * built-in form components
- * built-in decorator features
- * built-in special form blocks
+ * A set of commonly needed form components can be built through the decorator builder. A new
+ * decorator builder can be obtained as in the simple example above using {@link #prepareDecorator()}.
+ * 
+ * The decorator builder provides out-of-the-box support for:
+ * <ul>
+ * <li>component label, using a fixed string or a string-typed model. The label uses a LABEL tag
+ * that points to the component</li>
+ * <li>building the component's model automatically from a string-typed model specification. The interpretation
+ * of that specification is left to the {@link ModelBuilder} set in this panel. The standard behavior is to use
+ * a {@link PropertyModelBuilder} that interprets the model specification as a property path and builds a
+ * {@link PropertyModel} from it.</li>
+ * <li>setting a conversion type for the model value</li>
+ * <li>setting the requiredness and adding validations or other behaviors</li>
+ * <li>providing a help text, either as a fixed string or as a string-typed model</li>
+ * </ul>
  *
  * <p><b>Statelessness</b></p>
  *
@@ -104,7 +126,9 @@ import name.martingeisse.wicket.helpers.AjaxRequestUtil;
  * <p><b>Creating decorators for custom form components</b></p>
  * <p>
  * {@link DecoratorBuilder} is used to build common form components, but it can also be used
- * with a custom panel or panel-like component as its decorated body using (TODO: method!).
+ * with a custom panel or panel-like component as its decorated body using either
+ * {@link DecoratorBuilder#addDecorator(Component, org.apache.wicket.markup.html.form.LabeledWebMarkupContainer, Component)}
+ * or {@link DecoratorBuilder#addDecoratorForSingleFormComponent(Component, FormComponent)}.
  * Such a custom body will be decorated with a label, error {@link FeedbackPanel} etc. as usual.
  * The panel must contain the markup used for the custom form components. Likewise, the panel
  * could contain arbitrary content as well that then gets decorated.
@@ -116,14 +140,6 @@ import name.martingeisse.wicket.helpers.AjaxRequestUtil;
  * one form component. The panel would then contain the markup for all of them. In such a
  * case, you must choose one of them to be the source for validation errors, or provide a
  * custom {@link FeedbackPanel} yourself.
- * </p>
- *
- * <p><b>Creating custom decorators</b></p>
- * <p>
- * By extending {@link DecoratorBuilder}, you can customize the way decorators get build. See
- * that class for details. Such a subclass can be used just by passing this panel to its
- * constructor ({@link #prepareDecorator()} is just a shortcut to that constructor).
- * TODO not yet possible
  * </p>
  *
  * <p><b>Creating custom form blocks</b></p>
