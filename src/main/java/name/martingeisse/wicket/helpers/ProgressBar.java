@@ -1,11 +1,14 @@
 package name.martingeisse.wicket.helpers;
 
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
+
+import java.util.List;
 
 /**
  * This component should be attached to an element of display: block or display:inline-block. The width of that
@@ -107,11 +110,33 @@ public class ProgressBar extends WebComponent {
 	@Override
 	public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
 		super.onComponentTagBody(markupStream, openTag);
+
+		final ProgressBarClientProgressBehavior clientProgressBehavior;
+		List<ProgressBarClientProgressBehavior> clientProgressBehaviors = getBehaviors(ProgressBarClientProgressBehavior.class);
+		if (clientProgressBehaviors.isEmpty()) {
+			clientProgressBehavior = null;
+		} else if (clientProgressBehaviors.size() == 1) {
+			clientProgressBehavior = clientProgressBehaviors.get(0);
+		} else {
+			throw new IllegalStateException("found multiple ProgressBarClientProgressBehaviors for the same progress bar");
+		}
+
 		Integer progressPercentage = getProgressPercentage();
 		int normalizedPercentage = (progressPercentage == null ? 0 : progressPercentage);
-		getResponse().write("<div class=\"progress-bar\" style=\"width: ");
+		getResponse().write("<div class=\"progress-bar");
+		if (clientProgressBehavior != null) {
+			getResponse().write(" js-progress");
+		}
+		getResponse().write("\" style=\"width: ");
 		getResponse().write(Integer.toString(normalizedPercentage));
-		getResponse().write("%\"></div>");
+		getResponse().write("%; ");
+		if (clientProgressBehavior != null) {
+			getResponse().write("animation-duration: ");
+			// add 1 second to compensate for the duration of the AJAX call
+			getResponse().write(Integer.toString(clientProgressBehavior.getRemainingSeconds() + 1));
+			getResponse().write("s; ");
+		}
+		getResponse().write("\"></div>");
 	}
 
 }
