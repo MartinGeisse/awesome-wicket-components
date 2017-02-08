@@ -41,13 +41,13 @@ dependencies {
 	compile 'commons-codec:commons-codec:1.9'
 
 	// Wicket
-	compile('org.apache.wicket:wicket-core:7.5.0') {
+	compile('org.apache.wicket:wicket-core:7.6.0') {
 		exclude group: 'org.apache.wicket', module: 'wicket'
 	}
-	compile('org.apache.wicket:wicket-extensions:7.5.0') {
+	compile('org.apache.wicket:wicket-extensions:7.6.0') {
 		exclude group: 'org.apache.wicket', module: 'wicket'
 	}
-	compile('org.wicketstuff:wicketstuff-stateless:7.5.0') {
+	compile('org.wicketstuff:wicketstuff-stateless:7.6.0') {
 		exclude group: 'org.apache.wicket', module: 'wicket'
 	}
 
