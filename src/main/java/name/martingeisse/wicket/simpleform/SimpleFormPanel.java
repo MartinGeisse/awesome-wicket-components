@@ -6,6 +6,7 @@
 
 package name.martingeisse.wicket.simpleform;
 
+import name.martingeisse.wicket.serializable.SerializableRunnable;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -278,7 +279,7 @@ public class SimpleFormPanel<F> extends Panel {
 	 * @param onSubmitCallback a callback that should be invoked when the form gets submitted
 	 * @return the form
 	 */
-	protected Form<F> newForm(final String id, final IModel<F> model, final Runnable onSubmitCallback) {
+	protected Form<F> newForm(final String id, final IModel<F> model, final SerializableRunnable onSubmitCallback) {
 		if (isBuildStateless()) {
 			return new StatelessForm<F>(id, model) {
 
