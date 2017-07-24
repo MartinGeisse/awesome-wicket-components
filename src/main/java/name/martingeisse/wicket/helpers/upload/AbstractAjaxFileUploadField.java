@@ -7,9 +7,12 @@
 package name.martingeisse.wicket.helpers.upload;
 
 import java.util.List;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -34,7 +37,7 @@ public abstract class AbstractAjaxFileUploadField extends WebComponent implement
 	/**
 	 * the logger
 	 */
-	private static Logger logger = Logger.getLogger(AbstractAjaxFileUploadField.class);
+	private static Logger logger = LogManager.getLogger();
 	
 	/**
 	 * Constructor.
