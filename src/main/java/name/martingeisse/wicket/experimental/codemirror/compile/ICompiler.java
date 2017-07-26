@@ -4,7 +4,8 @@
 
 package name.martingeisse.wicket.experimental.codemirror.compile;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Compiles the document from a CodeMirror instance.
@@ -29,7 +30,7 @@ public interface ICompiler {
 		/**
 		 * the logger
 		 */
-		private static Logger logger = Logger.getLogger(ICompiler.Util.class);
+		private static Logger logger = LogManager.getLogger(ICompiler.Util.class);
 		
 		/**
 		 * Compiles the specified document "safely", catching exceptions and
