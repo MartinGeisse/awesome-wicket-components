@@ -6,6 +6,8 @@
 
 package name.martingeisse.wicket.internal;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONStringer;
 import org.apache.wicket.ajax.json.JsonSequenceStringer;
@@ -15,6 +17,8 @@ import org.apache.wicket.ajax.json.JsonSequenceStringer;
  */
 public class JsUtil {
 
+	private static final Gson gson = new GsonBuilder().serializeNulls().disableHtmlEscaping().create();
+
 	/**
 	 * Returns a JS string literal for the specified value.
 	 *
@@ -22,13 +26,7 @@ public class JsUtil {
 	 * @return the string literal
 	 */
 	public static String toStringLiteral(final String s) {
-		try {
-			final JSONStringer stringer = new JSONStringer();
-			stringer.value(s);
-			return stringer.toString();
-		} catch (final JSONException e) {
-			throw new RuntimeException(e);
-		}
+		return gson.toJson(s);
 	}
 
 	/**
@@ -38,13 +36,7 @@ public class JsUtil {
 	 * @return the string literal
 	 */
 	public static CharSequence toStringLiteralCharSequence(final String s) {
-		try {
-			final JsonSequenceStringer stringer = new JsonSequenceStringer();
-			stringer.value(s);
-			return stringer.toCharSequence();
-		} catch (final JSONException e) {
-			throw new RuntimeException(e);
-		}
+		return toStringLiteral(s);
 	}
 
 }
